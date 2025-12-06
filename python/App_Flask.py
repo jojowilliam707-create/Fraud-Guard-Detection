@@ -9,7 +9,7 @@ import os
 
 
 class Config:
-    ORIGINS = ["http://localhost:5173", "http://localhost:3000", "*"]
+    ORIGINS = ["http://localhost:3000", "http://localhost:8080", "http://localhost:5173", "*"]
     LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 
 

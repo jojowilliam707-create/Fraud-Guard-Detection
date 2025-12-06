@@ -3,11 +3,15 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+    minify: "terser",
+  },
   server: {
     host: "::",
-    port: 8080,
+    port: 3000,
     proxy: {
       '/api': {
         target: process.env.VITE_API_URL || 'http://127.0.0.1:5000',
