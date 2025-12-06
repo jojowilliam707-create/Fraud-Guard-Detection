@@ -26,9 +26,16 @@ interface AnalysisResult {
   row_data?: CSVRow;
 }
 
+// Get API URL from environment variable or fallback
+const getApiUrl = () => {
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
+  return apiUrl.replace(/\/$/, ''); // Remove trailing slash
+};
+
 const Index = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const apiUrl = getApiUrl();
   
   // CSV data state
   const [csvFile, setCsvFile] = useState<File | null>(null);
@@ -172,7 +179,7 @@ const Index = () => {
         transaction_hour: parseInt(String(foundRow['Transaction_Hour'] || foundRow['transaction_hour'] || 12)),
       };
 
-      const response = await fetch("http://127.0.0.1:5000/api/predict", {
+      const response = await fetch(`${apiUrl}/api/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
