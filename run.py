@@ -18,7 +18,8 @@ if __name__ == '__main__':
     # Get configuration from environment
     env = os.getenv('FLASK_ENV', 'development')
     host = os.getenv('FLASK_HOST', '0.0.0.0')
-    port = int(os.getenv('FLASK_PORT', 5000))
+    # Railway provides PORT environment variable, fallback to FLASK_PORT or 5000
+    port = int(os.getenv('PORT') or os.getenv('FLASK_PORT', 5000))
     
     print(f"\n{'='*60}")
     print(f"Starting Transact Safe Check Backend")
