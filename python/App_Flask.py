@@ -34,8 +34,22 @@ def load_model(logger):
     try:
         script_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(script_dir)
-        model_file = os.path.join(parent_dir, "model", "Creditcard.model")
-        model_path = model_file if os.path.exists(model_file) else None
+        
+        # Try multiple model file names
+        model_names = ["Credit.pickle", "Creditcard.model", "model.pkl", "model.joblib"]
+        model_path = None
+        
+        for name in model_names:
+            candidate = os.path.join(parent_dir, "model", name)
+            if os.path.exists(candidate):
+                model_path = candidate
+                logger.info(f"Found model file: {name}")
+                break
+        
+        if model_path is None:
+            logger.error(f"No model file found. Searched for: {', '.join(model_names)}")
+            return None
+        
         model = PredictionModel(model_path)
         logger.info(f"Model initialized (path: {model_path})")
         return model
